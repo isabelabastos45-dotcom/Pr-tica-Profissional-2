@@ -1,0 +1,103 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background-color: #f4f6f8;
+    display: flex;
+    justify-content: center;
+    padding: 40px;
+}
+
+.container {
+    width: 100%;
+    max-width: 600px;
+}
+
+.add-flashcard-con {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+#add-flashcard-con {
+    padding: 10px 20px;
+    border: none;
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+#add-flashcard-con:hover {
+    background-color: #45a049;
+}
+
+#card-container {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    min-height: 150px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.question-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    
+    background: white;
+    padding: 20px;
+    width: 90%;
+    max-width: 400px;
+    border-radius: 10px;
+
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+#close-btn {
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.input {
+    width: 100%;
+    margin: 8px 0 15px 0;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+#save-btn {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background-color: #2196F3;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+#save-btn:hover {
+    background-color: #1976D2;
+}
+
+.error span {
+    color: red;
+    font-size: 14px;
+}
+
+.hide {
+    display: none;
+}

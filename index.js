@@ -64,7 +64,7 @@ function viewlist() {
     var link = document.createElement("a");
     link.setAttribute("href", "#");
     link.setAttribute("class", "show-hide-btn");
-    link.innerHTML = "Mostrar/Esconder";;
+    link.innerHTML = "Resposta";;
     link.addEventListener("click", () => {displayAnswer.classList.toggle("hide")});
 
     div.appendChild(link);
@@ -82,10 +82,23 @@ function viewlist() {
     })
 
     buttonsCon.appendChild(editButton);
+    disableButtons(false)
+
+    var deleteButton = document.createElement("button");
+    deleteButton.setAttribute("class", "delete");
+    deleteButton.innerHTML = `<i class = "fa-solid fa-trash-can"></i>`;
+    deleteButton.addEventListener("click", () => {
+    modifyElement(deleteButton);
+    checkEmpty();
+});
+
+    buttonsCon.appendChild(deleteButton);
 
     div.appendChild(buttonsCon);
     listCard[0].appendChild(div);
     hideQuestion();
+
+    checkEmpty();
 }
 
 const modifyElement = (element, edit = false) => {
@@ -99,3 +112,23 @@ const modifyElement = (element, edit = false) => {
     }
     parentDiv.remove();
 }
+
+const disableButtons = (value) => {
+    let editButtons = document.getElementsByClassName("edit");
+    Array.from(editButtons).forEach(element => {
+        element.disabled = value;
+    })
+}
+
+function checkEmpty() {
+    const list = document.querySelector(".card-list-container");
+    const cardContainer = document.getElementById("card-container");
+
+    if (list.children.length === 0) {
+        cardContainer.classList.add("hide");
+    } else {
+        cardContainer.classList.remove("hide");
+    }
+}
+
+checkEmpty();

@@ -1,56 +1,49 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Flashcards</title>
+<head>
 
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-        <link rel="stylesheet" href="index.css">
-    </head>
-    
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flashcards</title>
+  <link rel="stylesheet" href="index.css">
 
-    <body>
-        <div class="container">
+</head>
 
-            <div class="add-flashcard-con">
-                <button id="add-flashcard-con">Adicionar Flashcard</button>
-            </div>
+<body>
 
-            <div id="card-container">
-                <div class="card-list-container"></div>
-            </div>
+  <div class="home">
+    <button id="openFolderPopup">Adicionar pasta</button>
+    <div id="folderList" class="folder-list"></div>
+  </div>
 
-        </div>
+  <div id="folderPopup" class="popup hide">
+    <div class="popup-content">
+      <h2>Nova pasta</h2>
+      <input type="text" id="folderName" placeholder="Nome da pasta">
+      <div class="buttons">
+        <button id="saveFolder">Salvar</button>
+        <button id="closeFolder">Fechar</button>
+      </div>
+    </div>
+  </div>
 
-        <div class="question-container hide" id="add-question-card">
-            <h2>Adicionar Flashcard</h2>
-            <div class="wrapper">
-                <div class="error">
-                    <span class="hide" id="error">Locais de preenchimento não podem estar vazios!</span>
-                </div>
-                <i class="fa-solid fa-xmark" id="close-btn"></i>
-            </div>
-            
-            <label for="question">Pergunta:</label>
-            <textarea 
-            class="input" 
-            id="question" 
-            placeholder="Escreva a pergunta aqui." 
-            rows="2"></textarea>
-            
-            <label for="answer">Resposta:</label>
-            <textarea 
-            class="input" 
-            id="answer" 
-            rows="4" 
-            placeholder="Escreva a resposta aqui."></textarea>
+  <div id="flashcardPopup" class="popup hide">
+    <div class="popup-content large">
+      <h2 id="folderTitle"></h2>
+      <button id="addFlashcard">Adicionar Flashcard</button>
 
-            <button id="save-btn">Salvar</button>
+      <div class="card-list-container"></div>
 
-        </div>
+      <div id="flashcardForm" class="hide">
+        <input type="text" id="question" placeholder="Pergunta">
+        <input type="text" id="answer" placeholder="Resposta">
+        <button id="saveCard">Salvar</button>
+      </div>
 
-        <script src="index.js"></script>
+      <button id="closeFlashcards">Fechar</button>
+    </div>
+  </div>
 
-    </body>
+  <script src="index.js"></script>
+</body>
 </html>

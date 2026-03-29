@@ -1,134 +1,110 @@
-const container = document.querySelector(".container");
-const addQuestionCard = document.getElementById("add-question-card");
-const cardButton = document.getElementById("save-btn");
+const openFolderPopup = document.getElementById("openFolderPopup");
+const folderPopup = document.getElementById("folderPopup");
+const flashcardPopup = document.getElementById("flashcardPopup");
+
+const saveFolder = document.getElementById("saveFolder");
+const closeFolder = document.getElementById("closeFolder");
+const folderNameInput = document.getElementById("folderName");
+const folderList = document.getElementById("folderList");
+
+const folderTitle = document.getElementById("folderTitle");
+const addFlashcard = document.getElementById("addFlashcard");
+const flashcardForm = document.getElementById("flashcardForm");
 const question = document.getElementById("question");
 const answer = document.getElementById("answer");
-const errorMessage = document.getElementById("error");
-const addQuestion = document.getElementById("add-flashcard-con");
-const closeBtn = document.getElementById("close-btn");
+const saveCard = document.getElementById("saveCard");
+const cardList = document.querySelector(".card-list-container");
+const closeFlashcards = document.getElementById("closeFlashcards");
 
-let editBool = false;
+let folders = [];
+let currentFolder = null;
 
-addQuestion.addEventListener("click", () => {
-    container.classList.add("hide");
+openFolderPopup.onclick = () => folderPopup.classList.remove("hide");
+
+closeFolder.onclick = () => folderPopup.classList.add("hide");
+
+saveFolder.onclick = () => {
+    const name = folderNameInput.value.trim();
+    if (!name) return alert("Digite um nome!");
+
+    const folder = { name, cards: [] };
+    folders.push(folder);
+    renderFolders();
+
+    folderNameInput.value = "";
+    folderPopup.classList.add("hide");
+};
+
+function renderFolders() {
+    folderList.innerHTML = "";
+    folders.forEach((f, i) => {
+        const div = document.createElement("div");
+        div.classList.add("folder-item");
+        div.innerText = f.name;
+        div.onclick = () => openFolder(i);
+        folderList.appendChild(div);
+    });
+}
+
+function openFolder(index) {
+    currentFolder = folders[index];
+    folderTitle.innerText = currentFolder.name;
+    renderCards();
+    flashcardPopup.classList.remove("hide");
+}
+
+closeFlashcards.onclick = () => {
+    flashcardPopup.classList.add("hide");
+    flashcardForm.classList.add("hide");
     question.value = "";
     answer.value = "";
-    addQuestionCard.classList.remove("hide");
-});
+};
 
-closeBtn.addEventListener("click", () => {
-    container.classList.remove("hide");
-    addQuestionCard.classList.add("hide");
+addFlashcard.onclick = () => flashcardForm.classList.remove("hide");
 
-    if (editBool) {
-        editBool = false;
-        submitQuestion();
-    }
-});
+saveCard.onclick = () => {
+    const q = question.value.trim();
+    const a = answer.value.trim();
+    if (!q || !a) return alert("Preencha tudo!");
 
-function submitQuestion() {
-    container.classList.remove("hide");
-    editBool = false;
+    const card = { q, a };
+    currentFolder.cards.push(card);
+    renderCards();
 
-    let tempQuestion = question.value.trim();
-    let tempAnswer = answer.value.trim();
+    question.value = "";
+    answer.value = "";
+    flashcardForm.classList.add("hide");
+};
 
-    if (!tempQuestion || !tempAnswer) {
-        errorMessage.classList.remove("hide");
-    } else {
-        errorMessage.classList.add("hide");
+function renderCards() {
+    cardList.innerHTML = "";
+    currentFolder.cards.forEach(c => {
+        const div = document.createElement("div");
+        div.classList.add("card");
 
-        viewlist();
+        const questionEl = document.createElement("p");
+        questionEl.innerHTML = `<strong>${c.q}</strong>`;
 
-        question.value = "";
-        answer.value = "";
-    }
+        const answerEl = document.createElement("p");
+        answerEl.innerText = c.a;
+        answerEl.classList.add("hide", "answer");
+
+        const toggleBtn = document.createElement("a");
+        toggleBtn.innerText = "Mostrar resposta";
+        toggleBtn.style.cursor = "pointer";
+        toggleBtn.style.color = "#ffffff";
+
+        toggleBtn.addEventListener("click", () => {
+            answerEl.classList.toggle("hide");
+            toggleBtn.innerText = answerEl.classList.contains("hide")
+                ? "Mostrar resposta"
+                : "Ocultar resposta";
+        });
+
+        div.appendChild(questionEl);
+        div.appendChild(toggleBtn);
+        div.appendChild(answerEl);
+
+        cardList.appendChild(div);
+    });
 }
-
-cardButton.addEventListener("click", submitQuestion);
-
-function hideQuestion() {
-    addQuestionCard.classList.add("hide");
-    container.classList.remove("hide");
-}
-
-function viewlist() {
-    var listCard = document.getElementsByClassName("card-list-container");
-    var div = document.createElement("div");
-    div.classList.add("card");
-    div.innerHTML += `<p class="question-div">${question.value}</p>`;
-    var displayAnswer = document.createElement("p");
-    displayAnswer.classList.add("answer-div", "hide");
-    displayAnswer.innerText = answer.value;
-
-    var link = document.createElement("a");
-    link.setAttribute("href", "#");
-    link.setAttribute("class", "show-hide-btn");
-    link.innerHTML = "Resposta";;
-    link.addEventListener("click", () => {displayAnswer.classList.toggle("hide")});
-
-    div.appendChild(link);
-    div.appendChild(displayAnswer);
-
-    let buttonsCon = document.createElement("div");
-    buttonsCon.classList.add("buttons-con");
-    var editButton = document.createElement("button");
-    editButton.setAttribute("class", "edit");
-    editButton.innerHTML = `<i class = "fa-solid fa-pen-to-square"></i>`;
-    editButton.addEventListener("click",  () => {
-        editBool = true;
-        modifyElement(editButton, true);
-        addQuestionCard.classList.remove("hide");
-    })
-
-    buttonsCon.appendChild(editButton);
-    disableButtons(false)
-
-    var deleteButton = document.createElement("button");
-    deleteButton.setAttribute("class", "delete");
-    deleteButton.innerHTML = `<i class = "fa-solid fa-trash-can"></i>`;
-    deleteButton.addEventListener("click", () => {
-    modifyElement(deleteButton);
-    checkEmpty();
-});
-
-    buttonsCon.appendChild(deleteButton);
-
-    div.appendChild(buttonsCon);
-    listCard[0].appendChild(div);
-    hideQuestion();
-
-    checkEmpty();
-}
-
-const modifyElement = (element, edit = false) => {
-    let parentDiv = element.parentElement.parentElement;
-    let parentQuestion = parentDiv.querySelector(".question-div").innerText;
-    if(edit){
-        let parentAns = parentDiv.querySelector(".answer-div").innerText;
-        answer.value = parentAns;
-        question.value = parentQuestion;
-        disableButtons(true);
-    }
-    parentDiv.remove();
-}
-
-const disableButtons = (value) => {
-    let editButtons = document.getElementsByClassName("edit");
-    Array.from(editButtons).forEach(element => {
-        element.disabled = value;
-    })
-}
-
-function checkEmpty() {
-    const list = document.querySelector(".card-list-container");
-    const cardContainer = document.getElementById("card-container");
-
-    if (list.children.length === 0) {
-        cardContainer.classList.add("hide");
-    } else {
-        cardContainer.classList.remove("hide");
-    }
-}
-
-checkEmpty();

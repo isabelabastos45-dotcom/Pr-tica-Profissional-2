@@ -40,9 +40,18 @@ function renderFolders() {
     folders.forEach((f, i) => {
         const div = document.createElement("div");
         div.classList.add("folder-item");
-        div.innerText = f.name;
-        div.onclick = () => openFolder(i);
-        folderList.appendChild(div);
+       const img = document.createElement("img");
+       img.src = "https://i.imgur.com/pECxvXy.png";
+       img.classList.add("folder-icon");
+       
+       const name = document.createElement("p");
+       name.innerText = f.name;
+       name.classList.add("folder-name");
+       
+       div.appendChild(img);
+       div.appendChild(name);
+       div.onclick = () => openFolder(i);
+       folderList.appendChild(div);
     });
 }
 

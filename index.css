@@ -2,13 +2,37 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Arial, Helvetica, sans-serif, marola;
 }
+
 
 body {
     background-color: #2a3169;
     padding: 40px;
     color: #333;
+    font-family: 'Poppins', sans-serif;
+}
+
+
+h2 {
+    font-family: 'Press Start 2P', cursive;
+}
+
+
+button {
+    padding: 10px;
+    border: none;
+    background-color: #2a3169;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 10px;
+}
+
+button:hover {
+    background-color: #B0C49C;
+    color: #2a3169;
 }
 
 .home {
@@ -19,36 +43,53 @@ body {
 
 .home button {
     padding: 12px 20px;
-    border: none;
-    background-color: white;
-    color: #2a3169;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 16px;
     margin-bottom: 20px;
-}
-
-.home button:hover {
-    background-color: #B0C49C;
 }
 
 .folder-list {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 20px;
+    justify-content: center;
 }
 
+
 .folder-item {
-    padding: 10px 15px;
-    background: #ffffff;
-    color: #2a3169;
-    border-radius: 6px;
+    width: 150px;
+    height: 180px;
+    background: white;
+    border-radius: 10px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
     cursor: pointer;
+    transition: 0.2s;
 }
 
 .folder-item:hover {
     background-color: #B0C49C;
 }
+
+
+.folder-icon {
+    width: 128px;
+    height: 128px;
+    image-rendering: pixelated;
+}
+
+
+.folder-name {
+    margin-top: 8px;
+    color: #2a3169;
+    font-size: 10px;
+    text-align: center;
+    font-family: 'Press Start 2P', cursive;
+
+}
+
 
 .popup {
     position: fixed;
@@ -79,28 +120,16 @@ body {
     max-width: 700px;
 }
 
+
 input {
     width: 100%;
     margin: 10px 0;
     padding: 8px;
     border-radius: 5px;
     border: 1px solid #ccc;
+    font-family: 'Poppins', sans-serif;
 }
 
-button {
-    padding: 10px;
-    border: none;
-    background-color: #2a3169;
-    color: white;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 10px;
-}
-
-button:hover {
-    background-color: #B0C49C;
-    color: #2a3169;
-}
 
 .card-list-container {
     margin-top: 20px;
@@ -120,3 +149,5 @@ button:hover {
     padding: 8px;
     border-radius: 6px;
 }
+
+

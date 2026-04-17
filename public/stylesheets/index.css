@@ -1,0 +1,236 @@
+
+/*######### INICIO #########*/
+/*remove os padrões do navegador*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+/*##################*/
+
+
+/*######## ESTRUTURA BÁSICA ##########*/
+/*estrutura principal da pagina*/
+body {
+    background-color: white;
+    padding: 40px;
+    color: #333;
+    font-family: 'Georgia', sans-serif;
+}
+
+/*títulos*/
+h2 {
+    font-family: 'Georgia', sans-serif;
+}
+/*##################*/
+
+
+/*######## BOTÕES ##########*/
+/*botões gerais*/
+button {
+    padding: 10px;
+    border: none;
+    background-color: #0080FF;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    font-family: 'Georgia', sans-serif;
+    font-size: 15px;
+}
+
+/*hover dos botões*/
+button:hover {
+    background-color: #DCDCDC;
+    color: #0080FF;
+}
+/*##################*/
+
+
+/*######## HOME ##########*/
+/*tela principal (home/index)*/
+.home {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* botão da home maior */
+.home button {
+    padding: 12px 20px;
+    margin-bottom: 20px;
+    font-size: 25px;
+}
+/*##################*/
+
+
+/*######### POPUP #########*/
+/*popups*/
+.popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background: rgba(0,0,0,0.7);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 999;
+}
+
+/*esconder popup*/
+.hide {
+    display: none;
+}
+
+/*conteúdo do popup*/
+.popup-content {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+
+    width: 90%;
+    max-width: 400px;
+}
+
+/*popup maior (flashcards)*/
+.popup-content.large {
+    max-width: 700px;
+}
+
+/*inputs gerais*/
+input {
+    width: 100%;
+    margin: 10px 0;
+    padding: 8px;
+
+    border-radius: 5px;
+    border: 1px solid #ccc;
+
+    font-family: 'Georgia', sans-serif;
+}
+/*##################*/
+
+
+/*######## PASTAS ##########*/
+/*lista de pastas dos flashcards*/
+.folder-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+/*cada pasta*/
+.folder-item {
+    width: 150px;
+    height: 180px;
+    background: white;
+    border-radius: 10px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+/*hover da pasta*/
+.folder-item:hover {
+    background-color: #DCDCDC;
+}
+
+/*ícone da pasta*/
+.folder-icon {
+    width: 128px;
+    height: 128px;
+    image-rendering: pixelated;
+}
+
+/*nome da pasta*/
+.folder-name {
+    margin-top: 8px;
+    color: #0080FF;
+    font-size: 20px;
+    text-align: center;
+    font-family: 'Georgia', sans-serif;
+}
+/*##################*/
+
+
+/*######## FLASHCARDS ##########*/
+/*grid dos flashcards*/
+.card-list-container {
+    margin-top: 20px;
+
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 15px;
+
+    width: 100%;
+}
+
+/*card individual*/
+.card {
+    background: #ffffff;
+    border: 2px solid #0080FF;
+    border-radius: 12px;
+
+    padding: 15px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    transition: 0.2s ease;
+}
+
+/*hover do card*/
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+}
+
+/*texto dentro do card*/
+.card p {
+    font-size: 16px;
+    color: #333;
+}
+
+/*botão de mostrar/esconder resposta*/
+.card a {
+    font-size: 14px;
+    color: #0080FF;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+/*botões do flashcard*/
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.buttons button {
+    flex: 1;
+}
+
+/*resposta do flashcard*/
+.answer {
+    background: #f4f4f4;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 14px;
+}
+/*##################*/

@@ -1,0 +1,45 @@
+<%- include('partials/header', { title: 'Home' }) %>
+
+<h2>Página inicial</h2>
+<p>Bem-vindo ao site!</p>
+
+
+<div class="home">
+  <button id="openFolderPopup">Adicionar pasta</button>
+  <div id="folderList" class="folder-list"></div>
+</div>
+
+<div id="folderPopup" class="popup hide">
+  <div class="popup-content">
+    <h2>Nova pasta</h2>
+    <input type="text" id="folderName" placeholder="Nome da pasta">
+    <div class="buttons">
+      <button id="saveFolder">Salvar</button>
+      <button id="closeFolder">Fechar</button>
+    </div>
+  </div>
+</div>
+
+<div id="flashcardPopup" class="popup hide">
+  <div class="popup-content large">
+
+    <h2 id="folderTitle"></h2>
+
+    <div class="card-list-container"></div>
+
+    <button id="addFlashcard">Adicionar Flashcard</button>
+
+    <div id="flashcardForm" class="hide">
+      <input type="text" id="question" placeholder="Pergunta">
+      <input type="text" id="answer" placeholder="Resposta">
+    </div>
+
+    <div class="buttons">
+      <button id="saveCard">Salvar</button>
+      <button id="closeFlashcards">Fechar</button>
+    </div>
+
+  </div>
+</div>
+
+<%- include('partials/footer') %>

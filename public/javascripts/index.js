@@ -5,6 +5,7 @@ const flashcardPopup = document.getElementById("flashcardPopup");
 const saveFolder = document.getElementById("saveFolder");
 const closeFolder = document.getElementById("closeFolder");
 const folderNameInput = document.getElementById("folderName");
+const folderCategory = document.getElementById("folderCategory");
 const folderList = document.getElementById("folderList");
 
 const folderTitle = document.getElementById("folderTitle");
@@ -19,49 +20,62 @@ const closeFlashcards = document.getElementById("closeFlashcards");
 let folders = [];
 let currentFolder = null;
 
+/*popups*/
 openFolderPopup.onclick = () => folderPopup.classList.remove("hide");
-
 closeFolder.onclick = () => folderPopup.classList.add("hide");
 
+/*salvar a pasta*/
 saveFolder.onclick = () => {
     const name = folderNameInput.value.trim();
+    const category = folderCategory.value;
+
     if (!name) return alert("Digite um nome!");
 
-    const folder = { name, cards: [] };
-    folders.push(folder);
+    folders.push({
+        name,
+        category,
+        cards: []
+    });
+
     renderFolders();
+    filterElements("Geral");
 
     folderNameInput.value = "";
     folderPopup.classList.add("hide");
 };
 
+/*render da pasta*/
 function renderFolders() {
     folderList.innerHTML = "";
+
     folders.forEach((f, i) => {
         const div = document.createElement("div");
+
         div.classList.add("folder-item");
-       const img = document.createElement("img");
-       img.src = "https://i.imgur.com/pECxvXy.png";
-       img.classList.add("folder-icon");
-       
-       const name = document.createElement("p");
-       name.innerText = f.name;
-       name.classList.add("folder-name");
-       
-       div.appendChild(img);
-       div.appendChild(name);
-       div.onclick = () => openFolder(i);
-       folderList.appendChild(div);
+        div.dataset.category = f.category;
+
+        const name = document.createElement("p");
+        name.innerText = f.name;
+        name.classList.add("folder-name");
+
+        div.appendChild(name);
+
+        div.onclick = () => openFolder(i);
+
+        folderList.appendChild(div);
     });
 }
 
+/*abrir pasta*/
 function openFolder(index) {
     currentFolder = folders[index];
     folderTitle.innerText = currentFolder.name;
+
     renderCards();
     flashcardPopup.classList.remove("hide");
 }
 
+/*fechar flashcard*/
 closeFlashcards.onclick = () => {
     flashcardPopup.classList.add("hide");
     flashcardForm.classList.add("hide");
@@ -69,15 +83,20 @@ closeFlashcards.onclick = () => {
     answer.value = "";
 };
 
-addFlashcard.onclick = () => flashcardForm.classList.remove("hide");
+/*mostrar o form*/
+addFlashcard.onclick = () => {
+    flashcardForm.classList.remove("hide");
+};
 
+/*salvar flashcard*/
 saveCard.onclick = () => {
     const q = question.value.trim();
     const a = answer.value.trim();
+
     if (!q || !a) return alert("Preencha tudo!");
 
-    const card = { q, a };
-    currentFolder.cards.push(card);
+    currentFolder.cards.push({ q, a });
+
     renderCards();
 
     question.value = "";
@@ -85,8 +104,10 @@ saveCard.onclick = () => {
     flashcardForm.classList.add("hide");
 };
 
+/*render do card*/
 function renderCards() {
     cardList.innerHTML = "";
+
     currentFolder.cards.forEach(c => {
         const div = document.createElement("div");
         div.classList.add("card");
@@ -101,14 +122,14 @@ function renderCards() {
         const toggleBtn = document.createElement("a");
         toggleBtn.innerText = "Mostrar resposta";
         toggleBtn.style.cursor = "pointer";
-        toggleBtn.style.color = "#000000";
 
-        toggleBtn.addEventListener("click", () => {
+        toggleBtn.onclick = () => {
             answerEl.classList.toggle("hide");
+
             toggleBtn.innerText = answerEl.classList.contains("hide")
                 ? "Mostrar resposta"
                 : "Ocultar resposta";
-        });
+        };
 
         div.appendChild(questionEl);
         div.appendChild(toggleBtn);
@@ -117,3 +138,23 @@ function renderCards() {
         cardList.appendChild(div);
     });
 }
+
+/*filtro*/
+function filterElements(category) {
+    const elements = document.querySelectorAll(".folder-item");
+
+    elements.forEach(el => {
+        const elCategory = el.dataset.category;
+
+        el.classList.remove("show");
+
+        if (category === "Geral" || elCategory === category) {
+            el.classList.add("show");
+        }
+    });
+}
+
+/*iniciar*/
+window.onload = () => {
+    filterElements("Geral");
+};

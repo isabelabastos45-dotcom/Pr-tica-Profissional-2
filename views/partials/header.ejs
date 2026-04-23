@@ -1,21 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-   <meta charset="UTF-8">
-   <title><%= title %></title>
-   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" integrity="sha512-8bHTC73gkZ7rZ7vpqUQThUDhqcNFyYi2xgDgPDHc+GXVGHXq+xPjynxIopALmOPqzo9JZj0k6OqqewdGO3EsrQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-   <link rel="stylesheet" href="/stylesheets/index.css">
-   <style>
-     body { padding:50px; }
-   </style>
-</head>
-<body class="container">
+   <head>
+      <meta charset="UTF-8">
+      <title><%= title %></title>
+      
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+      <link rel="stylesheet" href="/stylesheets/index.css">
+      
+      <style>
+      body {
+         background: #f5f7fb;
+      }
+      
+      .ui.menu {
+         background: linear-gradient(135deg, #0080FF, #005bb5) !important;
+         border: none !important;
+         box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+         padding: 5px;
+         border-radius: 0 !important;
+      }
+      
+      .ui.menu .item {
+         color: white !important;
+         background: transparent !important;
+         font-weight: bold;
+         border-radius: 0 !important;
+         transition: 0.2s ease;
+         text-decoration: none !important;
+      }
+      
+      .ui.menu .item:hover,
+      .ui.menu .item:focus,
+      .ui.menu .item:active {
+         background: rgba(255,255,255,0.15) !important;
+         color: white !important;
+         transform: translateY(-1px);
+      }
+      
+      .ui.menu .active.item {
+         background: transparent !important;
+         color: white !important;
+      }
+      
+      .ui.menu a {
+         text-decoration: none !important;
+      }
 
-<header>
-   <div class="ui inverted menu">
-       <a class="item" href="/">Home</a>
-       <a class="item" href="/about">About</a>
-       <a class="item" href="/signup">Signup</a>
-       <a class="item" href="/users">Users</a>
-   </div>
-</header>
+      .ui.menu {
+         position: fixed;
+         top: 0;
+         left: 0;
+         width: 100%;
+         z-index: 1000;
+      }
+      
+      .ui.inverted.footer {
+         background: linear-gradient(135deg, #0080FF, #005bb5);
+         color: white;
+         box-shadow: 0 -6px 20px rgba(0,0,0,0.15);
+         padding: 15px;
+         text-align: center;
+         font-weight: bold;
+      }
+
+      .ui.inverted.footer {
+         border-radius: 0 !important;
+         box-shadow: none !important;
+      }
+
+      .ui.inverted.footer {
+         position: fixed;
+         bottom: 0;
+         left: 0;
+         width: 100%;
+         z-index: 1000;
+      }
+      </style>
+      </head>
+      
+      <body>
+         <header>
+            <div class="ui inverted menu">
+               <a class="item" href="/">Inìcio</a>
+               <a class="item" href="/about">Sobre Nós</a>
+               <a class="item" href="/signup">Inscreva-se</a>
+            </div>
+         </header>
+         
+         <main class="main-content">

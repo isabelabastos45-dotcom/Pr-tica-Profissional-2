@@ -1,18 +1,62 @@
 <%- include('partials/header', { title: 'Home' }) %>
 
-<h2>Página inicial</h2>
-<p>Bem-vindo ao site!</p>
+<style>
+h2, p {
+  text-align: center;
+}
 
+p {
+   max-width: 700px;
+   margin: 10px auto;
+   line-height: 1.5;
+}
+
+.home {
+   min-height: 100vh;
+}
+</style>
+
+<section class="hero">
+  <h2>Bem-vindo ao Fixly!</h2>
+
+  <p>
+    Explore nossas páginas, acesse <a href="/about">Sobre nós</a> para saber mais sobre nosso site e
+    <a href="/signup">Inscreva-se</a> para poder salvar seus Flashcards e compartilhar com amigos!
+  </p>
+
+  <p>Abaixo você terá acesso a uma demonstração de como os flashcards do Fixly funcionam.</p>
+</section>
 
 <div class="home">
   <button id="openFolderPopup">Adicionar pasta</button>
+
   <div id="folderList" class="folder-list"></div>
+
+  <section class="materias">
+    <div class="buttons">
+      <button onclick="filterElements('Geral')">Geral</button>
+      <button onclick="filterElements('Linguagens')">Linguagens</button>
+      <button onclick="filterElements('Ciencias-Humanas')">Ciências Humanas</button>
+      <button onclick="filterElements('Matematica')">Matemática</button>
+      <button onclick="filterElements('Ciencias-da-Natureza')">Ciências da Natureza</button>
+    </div>
+  </section>
 </div>
 
+<!--criar pasta-->
 <div id="folderPopup" class="popup hide">
   <div class="popup-content">
     <h2>Nova pasta</h2>
+
     <input type="text" id="folderName" placeholder="Nome da pasta">
+
+    <select id="folderCategory">
+      <option value="Linguagens">Linguagens</option>
+      <option value="Ciencias-Humanas">Ciências Humanas</option>
+      <option value="Matematica">Matemática</option>
+      <option value="Ciencias-da-Natureza">Ciências da Natureza</option>
+    </select>
+
     <div class="buttons">
       <button id="saveFolder">Salvar</button>
       <button id="closeFolder">Fechar</button>
@@ -20,6 +64,7 @@
   </div>
 </div>
 
+<!--popup flashcard-->
 <div id="flashcardPopup" class="popup hide">
   <div class="popup-content large">
 

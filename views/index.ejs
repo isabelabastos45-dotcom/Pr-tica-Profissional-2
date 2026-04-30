@@ -1,44 +1,44 @@
 <%- include('partials/header', { title: 'Home' }) %>
 
 <style>
-h2, p {
+h2,
+p {
   text-align: center;
 }
 
 p {
-   max-width: 700px;
-   margin: 10px auto;
-   line-height: 1.5;
+  max-width: 700px;
+  margin: 10px auto;
+  line-height: 1.5;
 }
-
+        
 .home {
-   min-height: 100vh;
+  min-height: 100vh;
 }
 </style>
 
 <section class="hero">
   <h2>Bem-vindo ao Fixly!</h2>
-
+  
   <p>
     Explore nossas páginas, acesse <a href="/about">Sobre nós</a> para saber mais sobre nosso site e
     <a href="/signup">Inscreva-se</a> para poder salvar seus Flashcards e compartilhar com amigos!
   </p>
-
+  
   <p>Abaixo você terá acesso a uma demonstração de como os flashcards do Fixly funcionam.</p>
 </section>
 
 <div class="home">
   <button id="openFolderPopup">Adicionar pasta</button>
-
+  
   <div id="folderList" class="folder-list"></div>
-
   <section class="materias">
     <div class="buttons">
-      <button onclick="filterElements('Geral')">Geral</button>
-      <button onclick="filterElements('Linguagens')">Linguagens</button>
-      <button onclick="filterElements('Ciencias-Humanas')">Ciências Humanas</button>
-      <button onclick="filterElements('Matematica')">Matemática</button>
-      <button onclick="filterElements('Ciencias-da-Natureza')">Ciências da Natureza</button>
+      <button class="btn-geral">Geral</button>
+      <button class="btn-linguagens">Linguagens</button>
+      <button class="btn-humanas">Ciências Humanas</button>
+      <button class="btn-matematica">Matemática</button>
+      <button class="btn-natureza">Ciências da Natureza</button>
     </div>
   </section>
 </div>
@@ -47,16 +47,16 @@ p {
 <div id="folderPopup" class="popup hide">
   <div class="popup-content">
     <h2>Nova pasta</h2>
-
+    
     <input type="text" id="folderName" placeholder="Nome da pasta">
-
+    
     <select id="folderCategory">
       <option value="Linguagens">Linguagens</option>
       <option value="Ciencias-Humanas">Ciências Humanas</option>
       <option value="Matematica">Matemática</option>
       <option value="Ciencias-da-Natureza">Ciências da Natureza</option>
     </select>
-
+    
     <div class="buttons">
       <button id="saveFolder">Salvar</button>
       <button id="closeFolder">Fechar</button>
@@ -67,23 +67,21 @@ p {
 <!--popup flashcard-->
 <div id="flashcardPopup" class="popup hide">
   <div class="popup-content large">
-
+    
     <h2 id="folderTitle"></h2>
-
     <div class="card-list-container"></div>
-
+    
     <button id="addFlashcard">Adicionar Flashcard</button>
-
+    
     <div id="flashcardForm" class="hide">
       <input type="text" id="question" placeholder="Pergunta">
       <input type="text" id="answer" placeholder="Resposta">
     </div>
-
+    
     <div class="buttons">
       <button id="saveCard">Salvar</button>
       <button id="closeFlashcards">Fechar</button>
     </div>
-
   </div>
 </div>
 

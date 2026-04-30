@@ -1,8 +1,44 @@
 <%- include('partials/header', { title: 'Signup' }) %>
 
+
 <section class="hero">
     <h2>Formulário para inscrição</h2>
     <p>A fazer</p>
 </section>
+
+<form id="form">
+    <input type="text" id="name" placeholder="Nome" />
+    <input type="number" id="idade" placeholder="Idade" />
+    <button type="submit">Enviar</button>
+</form>
+
+<script>
+document.getElementById("form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const name = document.getElementById("name").value;
+    const idade = document.getElementById("idade").value;
+    
+    try {
+        const resposta = await fetch("http://localhost:3000/users", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ name, idade })
+    });
+    
+    if (resposta.ok) {
+      alert("Dados enviados com sucesso!");
+      document.getElementById("form").reset();
+    } else {
+      alert("Erro ao enviar dados!");
+    }
+
+} catch (error) {
+    console.error(error);
+    alert("Erro de conexão com o servidor!");
+}
+});
+</script>
 
 <%- include('partials/footer') %>

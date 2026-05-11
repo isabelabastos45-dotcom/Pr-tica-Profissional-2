@@ -1,12 +1,8 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 
-router.get('/', (req, res) => {
-  res.redirect('/signup');
-});
+const userController = require('../controllers/user.controller');
 
-router.get('/:userid', (req, res) => {
-  res.render('users', { userid: req.params.userid });
-});
+router.post('/', userController.create);
 
 module.exports = router;

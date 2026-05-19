@@ -2,12 +2,14 @@
 
 <section class="hero">
   <h2>Formulário para inscrição</h2>
-  <p>A fazer</p>
 </section>
 
 <form id="form">
-  <input type="text" id="name" placeholder="Nome" />
-  <input type="number" id="idade" placeholder="Idade" />
+  <input type="text" id="nome" placeholder="Nome" />
+  <input type="text" id="username" placeholder="Username" />
+  <input type="email" id="email" placeholder="Email" />
+  <input type="password" id="senha" placeholder="Senha" />
+
   <button type="submit">Enviar</button>
 </form>
 
@@ -15,8 +17,10 @@
 document.getElementById("form").addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  const name = document.getElementById("name").value;
-  const idade = document.getElementById("idade").value;
+  const nome = document.getElementById("nome").value;
+  const username = document.getElementById("username").value;
+  const email = document.getElementById("email").value;
+  const senha = document.getElementById("senha").value;
 
   try {
     const resposta = await fetch("http://localhost:3000/users", {
@@ -24,14 +28,21 @@ document.getElementById("form").addEventListener("submit", async (e) => {
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({ name, idade })
+      body: JSON.stringify({
+        nome,
+        username,
+        email,
+        senha
+      })
     });
 
+    const dados = await resposta.json();
+
     if (resposta.ok) {
-      alert("Dados enviados com sucesso!");
+      alert(dados.message);
       document.getElementById("form").reset();
     } else {
-      alert("Erro ao enviar dados!");
+      alert(dados.message);
     }
 
   } catch (error) {

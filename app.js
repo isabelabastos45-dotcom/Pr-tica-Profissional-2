@@ -9,6 +9,7 @@ var signupRouter = require('./routes/signup');
 
 var connectDatabase = require('./database/db');
 
+
 var connectDatabase = require('./database/db');
 var app = express();
 

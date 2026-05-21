@@ -1,9 +1,10 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
+require("dns").setDefaultResultOrder("ipv4first");
 
 const connectDatabase = async () => {
   try {
     await mongoose.connect(
-      "mongodb+srv://alencarlins07_db_user:TFp0HjTOfK0M9WUI@cluster0.crtpotu.mongodb.net/FixlyDB"
+      "mongodb+srv://alencarlins07_db_user:TFp0HjTOfK0M9WUI@cluster0.crtpotu.mongodb.net/FixlyDB?retryWrites=true&w=majority"
     );
 
     console.log("Banco de dados conectado com sucesso");

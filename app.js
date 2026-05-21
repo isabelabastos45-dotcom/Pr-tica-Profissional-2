@@ -6,6 +6,9 @@ var usersRouter = require('./routes/users');
 var aboutRouter = require('./routes/about');
 var dataRouter = require('./routes/data');
 var signupRouter = require('./routes/signup');
+var authRouter = require('./routes/auth');
+var profileRouter = require('./routes/profile');
+var loginRouter = require('./routes/login');
 
 var connectDatabase = require('./database/db');
 var app = express();
@@ -23,6 +26,9 @@ app.use('/', indexRouter);
 app.use('/about', aboutRouter);
 app.use('/data', dataRouter);
 app.use('/signup', signupRouter);
+app.use('/auth', authRouter);
+app.use('/profile', profileRouter);
+app.use('/login', loginRouter);
 
 app.use('/users', usersRouter);
 

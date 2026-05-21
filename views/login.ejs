@@ -1,0 +1,94 @@
+<%- include('partials/header', { title: 'Login' }) %>
+
+<section class="hero">
+  <h2>Entrar na conta</h2>
+</section>
+
+<form id="loginForm">
+
+  <input
+    type="email"
+    id="email"
+    placeholder="Email"
+    required
+  />
+
+  <input
+    type="password"
+    id="senha"
+    placeholder="Senha"
+    required
+  />
+
+  <button type="submit">
+    Entrar
+  </button>
+
+</form>
+
+<script>
+
+document.getElementById("loginForm")
+.addEventListener("submit", async (e) => {
+
+    e.preventDefault();
+
+    const email =
+        document.getElementById("email").value;
+
+    const senha =
+        document.getElementById("senha").value;
+
+    try{
+
+        const resposta = await fetch(
+            "http://localhost:3000/auth/login",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    email,
+                    senha
+                })
+            }
+        );
+
+        const data = await resposta.json();
+
+        if(resposta.ok){
+
+            localStorage.setItem(
+                "token",
+                data.token
+            );
+
+            localStorage.setItem(
+                "usuario",
+                JSON.stringify(data.usuario)
+            );
+
+            alert("Login realizado!");
+
+            window.location.href = "/profile";
+
+        }else{
+
+            alert(data.msg);
+
+        }
+
+    }catch(erro){
+
+        console.log(erro);
+
+        alert("Erro ao fazer login");
+
+    }
+
+});
+
+</script>
+
+<%- include('partials/footer') %>

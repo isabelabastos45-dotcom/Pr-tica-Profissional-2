@@ -137,7 +137,7 @@ document.getElementById("form").addEventListener("submit", async (e) => {
   const senha = document.getElementById("senha").value;
 
   try {
-    const resposta = await fetch("http://localhost:3000/users", {
+const resposta = await fetch("http://localhost:3000/auth/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -153,10 +153,10 @@ document.getElementById("form").addEventListener("submit", async (e) => {
     const dados = await resposta.json();
 
     if (resposta.ok) {
-      alert(dados.message);
+      alert(dados.msg);
       document.getElementById("form").reset();
     } else {
-      alert(dados.message);
+      alert(dados.msg);
     }
 
   } catch (error) {

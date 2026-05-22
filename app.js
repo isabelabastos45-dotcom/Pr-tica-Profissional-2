@@ -9,6 +9,7 @@ var signupRouter = require('./routes/signup');
 var authRouter = require('./routes/auth');
 var profileRouter = require('./routes/profile');
 var loginRouter = require('./routes/login');
+var flashcardsRouter = require('./routes/flashcards');
 
 var connectDatabase = require('./database/db');
 var app = express();
@@ -29,6 +30,7 @@ app.use('/signup', signupRouter);
 app.use('/auth', authRouter);
 app.use('/profile', profileRouter);
 app.use('/login', loginRouter);
+app.use('/flashcards', flashcardsRouter);
 
 app.use('/users', usersRouter);
 

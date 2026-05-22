@@ -27,18 +27,17 @@ h2 {
   background-color: #104488;
   width: fit-content;
   max-width: 100vw;
-  margin: 0 auto 30px auto; /* Aumentado o espaço abaixo do título */
+  margin: 0 auto 30px auto;
   border-radius: 20px;
 }
 
-/* Texto em negrito e na cor preta */
 p {
   max-width: 750px;
   margin: 15px auto;
   line-height: 1.6;
   font-size: 18px;
-  color: #000000; /* Cor preta */
-  font-weight: bold; /* Fonte em negrito */
+  color: #000000;
+  font-weight: bold;
 }
 
 .hero {
@@ -53,7 +52,7 @@ p {
   border-radius: 25px;
   width: 100%;
   max-width: 500px; 
-  margin: 15px auto 100px auto; /* Reduzido o espaço acima para aproximar do texto */
+  margin: 15px auto 100px auto; 
   box-shadow: 0 4px 20px rgba(0,0,0,0.1);
   box-sizing: border-box;
 }
@@ -96,6 +95,25 @@ p {
 #form button:hover {
   background-color: #0056b3;
 }
+
+.form-footer {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 16px;
+  color: #333;
+  font-weight: bold;
+}
+
+.form-footer a {
+  color: #007bff;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.form-footer a:hover {
+  color: #0056b3;
+  text-decoration: underline;
+}
 </style>
 
 <section class="hero">
@@ -105,12 +123,13 @@ p {
 
   <p>
     Por que criar sua conta na Fixly?<br>
-Junte-se a nós e tenha acesso a uma experiência sob medida para você. Ao se inscrever, você garante:<p></p>
-Acesso Exclusivo: Recursos e ferramentas disponíveis apenas para membros.<p></p>
-Histórico Completo: Salve suas preferências, acompanhe suas atividades e não perca nenhum detalhe.<p></p>
-Segurança e Praticidade: Um ambiente seguro com logins rápidos para facilitar o seu dia a dia.<p></p>
-Leva menos de 1 minuto! Preencha os campos abaixo e comece agora.
-
+    Junte-se a nós e tenha acesso a uma experiência sob medida para você. Ao se inscrever, você garante:
+  </p>
+  <p>
+    ✓ Acesso Exclusivo: Recursos e ferramentas disponíveis apenas para membros.<br>
+    ✓ Histórico Completo: Salve suas preferências, acompanhe suas atividades e não perca nenhum detalhe.<br>
+    ✓ Segurança e Praticidade: Um ambiente seguro com logins rápidos para facilitar o seu dia a dia.
+  </p>
   <p>
     Leva menos de 1 minuto! Preencha os campos abaixo e comece agora.
   </p>
@@ -118,45 +137,52 @@ Leva menos de 1 minuto! Preencha os campos abaixo e comece agora.
 
 <div class="form-container">
   <form id="form">
-    <input type="text" id="nome" placeholder="Nome" required />
-    <input type="text" id="username" placeholder="Username" required />
-    <input type="email" id="email" placeholder="Email" required />
-    <input type="password" id="senha" placeholder="Senha" required />
+    <input type="text" id="nome" placeholder="Nome completo" required minlength="3" />
+    <input type="text" id="username" placeholder="Nome de usuário" required minlength="3" pattern="^[a-zA-Z0-9_.]+$" title="Apenas letras, números, pontos ou underlines." />
+    <input type="email" id="email" placeholder="Email válido" required />
+    <input type="password" id="senha" placeholder="Senha (Mínimo 6 caracteres)" required minlength="6" />
 
-    <button type="submit">Enviar</button>
+    <button type="submit">Criar minha conta</button>
   </form>
+
+  <div class="form-footer">
+    Já tem uma conta? <a href="/login">Entre aqui</a>
+  </div>
 </div>
 
 <script>
 document.getElementById("form").addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  const nome = document.getElementById("nome").value;
-  const username = document.getElementById("username").value;
-  const email = document.getElementById("email").value;
+  const nome = document.getElementById("nome").value.trim();
+  const username = document.getElementById("username").value.trim();
+  const email = document.getElementById("email").value.trim();
   const senha = document.getElementById("senha").value;
 
+  // Validação extra básica via JS no front antes de enviar
+  if (senha.length < 6) {
+    alert("A senha precisa ter no mínimo 6 caracteres!");
+    return;
+  }
+
   try {
-const resposta = await fetch("http://localhost:3000/auth/register", {
+    const resposta = await fetch("http://localhost:3000/auth/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({
-        nome,
-        username,
-        email,
-        senha
-      })
+      body: JSON.stringify({ nome, username, email, senha })
     });
 
     const dados = await resposta.json();
 
     if (resposta.ok) {
-      alert(dados.msg);
+      alert(dados.msg || "Cadastro realizado com sucesso!");
       document.getElementById("form").reset();
+      window.location.href = "/login"; // Redireciona para o login
     } else {
-      alert(dados.msg);
+      // Exibe a mensagem de erro específica vinda do servidor (ex: "Username já existe")
+      alert(dados.msg || "Erro ao realizar o cadastro.");
     }
 
   } catch (error) {

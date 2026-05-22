@@ -1,82 +1,150 @@
 <%- include('partials/header', { title: 'Página de usuário' }) %>
 
-<h2>Página de usuário</h2>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@900&display=swap" rel="stylesheet">
 
-<%- include('partials/footer') %>
 <style>
-.profile-container{
-    max-width: 500px;
-    margin: 50px auto;
-    padding: 30px;
-    border-radius: 15px;
-    background: #f5f5f5;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    text-align: center;
+body {
+  background: linear-gradient(180deg, #74b9ff 0%, #dfefff 60%, #ffffff 100%);
+  background-attachment: fixed; 
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
 }
 
-.profile-avatar{
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    background: #ccc;
-    margin: 0 auto 20px;
+h2 {
+  font-size: 42px;
+  color: #104488;
+  text-align: center;
+  font-family: 'Merriweather', serif;
+  font-weight: 1000;
+  letter-spacing: 1px;
+  margin-bottom: 20px;
 }
 
-.profile-info{
-    margin: 15px 0;
-    font-size: 18px;
+.hero {
+  padding-top: 60px;
+  text-align: center;
+}
+
+/* Container do Perfil (Seguindo o padrão do Fixly) */
+.profile-container {
+  max-width: 500px;
+  margin: 30px auto 100px auto; 
+  padding: 40px;
+  border-radius: 25px;
+  background: rgba(255, 255, 255, 0.85); 
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  text-align: center;
+  box-sizing: border-box;
+}
+
+/* Avatar circular do usuário */
+.profile-avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: #104488; /* Azul escuro do tema para dar contraste */
+  margin: 0 auto 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Nome principal do usuário dentro do card */
+#nome {
+  font-family: 'Merriweather', serif;
+  color: #104488;
+  margin-bottom: 25px;
+  font-size: 28px;
+}
+
+/* Informações de texto */
+.profile-info {
+  margin: 15px 0;
+  font-size: 18px;
+  color: #333;
+  text-align: left; /* Alinhado à esquerda para melhor leitura de dados */
+  padding: 10px 15px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 8px;
+  border-left: 5px solid #74b9ff; /* Detalhe em azul na borda */
+}
+
+.profile-info strong {
+  color: #104488;
+}
+
+/* Botão de Logout (Estilo Alerta/Sair baseado no btn-geral da Home) */
+.profile-container button {
+  width: 100%;
+  margin-top: 25px;
+  padding: 15px 25px;
+  border: none;
+  border-radius: 8px;
+  color: #ffffff; 
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  background-color: #007bff; 
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.profile-container button:hover {
+  background-color: #0056b3;
+  color: #ffffff;
 }
 </style>
 
+<section class="hero">
+  <h2>Página de usuário</h2>
+</section>
+
 <div class="profile-container">
 
-    <div class="profile-avatar"></div>
+  <div class="profile-avatar">
+    <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+      <circle cx="12" cy="7" r="4"></circle>
+    </svg>
+  </div>
 
-    <h1 id="nome"></h1>
+  <h1 id="nome">Carregando...</h1>
 
-    <div class="profile-info">
-        <strong>Username:</strong>
-        <span id="username"></span>
-    </div>
+  <div class="profile-info">
+    <strong>Username:</strong>
+    <span id="username"></span>
+  </div>
 
-    <div class="profile-info">
-        <strong>Email:</strong>
-        <span id="email"></span>
-    </div>
+  <div class="profile-info">
+    <strong>Email:</strong>
+    <span id="email"></span>
+  </div>
 
-    <button onclick="logout()">
-        Sair da conta
-    </button>
+  <button onclick="logout()">
+    Sair da conta
+  </button>
 
 </div>
 
 <script>
-
 const usuario = JSON.parse(
     localStorage.getItem("usuario")
 );
 
-if(!usuario){
+if (!usuario) {
     window.location.href = "/login";
+} else {
+    document.getElementById("nome").innerText = usuario.nome;
+    document.getElementById("email").innerText = usuario.email;
+    document.getElementById("username").innerText = usuario.username || "Sem username";
 }
 
-document.getElementById("nome").innerText =
-    usuario.nome;
-
-document.getElementById("email").innerText =
-    usuario.email;
-
-document.getElementById("username").innerText =
-    usuario.username || "Sem username";
-
-
-function logout(){
-
+function logout() {
     localStorage.clear();
-
     window.location.href = "/login";
 }
-
 </script>
 
 <%- include('partials/footer') %>

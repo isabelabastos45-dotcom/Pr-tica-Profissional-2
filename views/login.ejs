@@ -27,7 +27,7 @@ h2 {
   text-align: center;
 }
 
-/* Container do Formulário (Baseado na estrutura da Home) */
+/* Container do Formulário */
 #loginForm {
   background: rgba(255, 255, 255, 0.85); 
   padding: 40px;
@@ -58,7 +58,7 @@ h2 {
   outline: none;
 }
 
-/* Botão Entrar (Azul de ação do Fixly) */
+/* Botão Entrar */
 #loginForm button {
   padding: 15px 25px;
   border: none;
@@ -75,7 +75,6 @@ h2 {
   background-color: #0056b3;
 }
 
-/* ESTILIZAÇÃO DO LINK ADICIONADA AQUI */
 .form-footer {
   text-align: center;
   margin-top: 10px;
@@ -127,28 +126,20 @@ h2 {
 </form>
 
 <script>
-document.getElementById("loginForm")
-.addEventListener("submit", async (e) => {
-
+document.getElementById("loginForm").addEventListener("submit", async (e) => {
     e.preventDefault();
 
     const email = document.getElementById("email").value;
     const senha = document.getElementById("senha").value;
 
     try {
-       // No seu fetch, apague todo o link inicial e deixe apenas o caminho:
-const resposta = await fetch(
-    "/auth/login", // <-- Só isso! O navegador já entende que é no mesmo site
-    {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ email, senha })
-    }
-);
-            }
-        );
+        const resposta = await fetch("/auth/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ email, senha })
+        });
 
         const data = await resposta.json();
 
@@ -159,7 +150,7 @@ const resposta = await fetch(
             alert("Login realizado!");
             window.location.href = "/profile";
         } else {
-            alert(data.msg);
+            alert(data.msg || "Erro ao fazer login");
         }
 
     } catch (erro) {
@@ -169,4 +160,4 @@ const resposta = await fetch(
 });
 </script>
 
-<%- include('partials/footer') %>
+<%- include('partials/footer') %

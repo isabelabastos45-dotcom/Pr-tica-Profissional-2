@@ -136,14 +136,17 @@ document.getElementById("loginForm")
     const senha = document.getElementById("senha").value;
 
     try {
-        const resposta = await fetch(
-            "http://localhost:3000/auth/login",
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ email, senha })
+       // No seu fetch, apague todo o link inicial e deixe apenas o caminho:
+const resposta = await fetch(
+    "/auth/login", // <-- Só isso! O navegador já entende que é no mesmo site
+    {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ email, senha })
+    }
+);
             }
         );
 

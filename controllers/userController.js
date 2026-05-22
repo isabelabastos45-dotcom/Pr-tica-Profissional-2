@@ -1,4 +1,4 @@
-const User = require('../models/User.js');
+const User = require("../models/User");
 
 // Lista dos principais provedores de e-mail temporário/falso para bloquear
 const dominiosBloqueados = [

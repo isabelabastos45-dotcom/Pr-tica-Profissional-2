@@ -1,18 +1,131 @@
 <%- include('partials/header', { title: 'Signup' }) %>
 
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@900&display=swap" rel="stylesheet">
+
+<style>
+body {
+  background: linear-gradient(180deg, #74b9ff 0%, #dfefff 60%, #ffffff 100%);
+  background-attachment: fixed; 
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+h2,
+p {
+  text-align: center;
+}
+
+h2 {
+  font-size: 40px; 
+  color: #6dbdff;
+  font-family: 'Merriweather', serif;
+  font-weight: 1000;
+  letter-spacing: 1px;
+  padding: 20px;
+  background-color: #104488;
+  width: fit-content;
+  max-width: 100vw;
+  margin: 0 auto 30px auto; /* Aumentado o espaço abaixo do título */
+  border-radius: 20px;
+}
+
+/* Texto em negrito e na cor preta */
+p {
+  max-width: 750px;
+  margin: 15px auto;
+  line-height: 1.6;
+  font-size: 18px;
+  color: #000000; /* Cor preta */
+  font-weight: bold; /* Fonte em negrito */
+}
+
+.hero {
+  padding-top: 40px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.form-container {
+  background: rgba(255, 255, 255, 0.85); 
+  padding: 40px;
+  border-radius: 25px;
+  width: 100%;
+  max-width: 500px; 
+  margin: 15px auto 100px auto; /* Reduzido o espaço acima para aproximar do texto */
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  box-sizing: border-box;
+}
+
+#form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+#form input {
+  width: 100%;
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+  box-sizing: border-box;
+  background-color: #ffffff;
+  transition: border-color 0.3s;
+}
+
+#form input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+#form button {
+  padding: 15px 25px;
+  border: none;
+  border-radius: 8px;
+  color: white; 
+  font-size: 18px;
+  cursor: pointer;
+  background-color: #007bff;
+  font-weight: bold;
+  transition: background-color 0.3s;
+  width: 100%;
+}
+
+#form button:hover {
+  background-color: #0056b3;
+}
+</style>
 
 <section class="hero">
-  <h2>Formulário para inscrição</h2>
+  <div class="container">
+    <h2>Formulário para inscrição</h2>
+  </div>
+
+  <p>
+    Por que criar sua conta na Fixly?<br>
+Junte-se a nós e tenha acesso a uma experiência sob medida para você. Ao se inscrever, você garante:<p></p>
+Acesso Exclusivo: Recursos e ferramentas disponíveis apenas para membros.<p></p>
+Histórico Completo: Salve suas preferências, acompanhe suas atividades e não perca nenhum detalhe.<p></p>
+Segurança e Praticidade: Um ambiente seguro com logins rápidos para facilitar o seu dia a dia.<p></p>
+Leva menos de 1 minuto! Preencha os campos abaixo e comece agora.
+
+  <p>
+    Leva menos de 1 minuto! Preencha os campos abaixo e comece agora.
+  </p>
 </section>
 
-<form id="form">
-  <input type="text" id="nome" placeholder="Nome" />
-  <input type="text" id="username" placeholder="Username" />
-  <input type="email" id="email" placeholder="Email" />
-  <input type="password" id="senha" placeholder="Senha" />
+<div class="form-container">
+  <form id="form">
+    <input type="text" id="nome" placeholder="Nome" required />
+    <input type="text" id="username" placeholder="Username" required />
+    <input type="email" id="email" placeholder="Email" required />
+    <input type="password" id="senha" placeholder="Senha" required />
 
-  <button type="submit">Enviar</button>
-</form>
+    <button type="submit">Enviar</button>
+  </form>
+</div>
 
 <script>
 document.getElementById("form").addEventListener("submit", async (e) => {

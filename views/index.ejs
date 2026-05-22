@@ -1,37 +1,143 @@
 <%- include('partials/header', { title: 'Home' }) %>
 
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@900&display=swap" rel="stylesheet">
+
 <style>
+body {
+  background: linear-gradient(180deg, #74b9ff 0%, #dfefff 60%, #ffffff 100%);
+  background-attachment: fixed; 
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
 h2,
 p {
   text-align: center;
+}
+
+h2 {
+  font-size: 200px;
+  color: #6dbdff;
+  font-family: 'Merriweather', serif;
+  font-weight: 1000;
+  letter-spacing: 1px;
+  padding: 20px;
+  background-color: #104488;
+  width: 100%;
+  max-width: 100vw;
+  border-radius: 20px;
+  display: inline-block;
 }
 
 p {
   max-width: 700px;
   margin: 10px auto;
   line-height: 1.5;
+  font-size: 18px;
+  font-weight: bold;
 }
-        
+
+.hero {
+  padding-top: 40px;
+}
+
 .home {
-  min-height: 100vh;
+  min-height: auto;
+}
+
+.pastas-container {
+  background: rgba(255, 255, 255, 0.85); 
+  padding: 40px;
+  border-radius: 25px;
+  width: fit-content;
+  margin: 50px auto 100px auto; 
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+button {
+  padding: 15px 25px;
+  border: none;
+  border-radius: 8px;
+  color: white; 
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.btn-geral { 
+  background-color: #ff7043; 
+  color: #832e15; 
+}
+.btn-linguagens { 
+  background-color: #ec5f91; 
+  color: #940b3b;
+}
+.btn-humanas { 
+  background-color: #f4c542; 
+  color: #7c5f07; 
+}
+.btn-matematica { 
+  background-color: #9b59b6; 
+  color: #590c77; 
+}
+.btn-natureza { 
+  background-color: #48c78e; 
+  color: #065a34;
+}
+
+#openFolderPopup {
+  display: block;
+  margin: 0 auto 30px auto;
+  background-color: #007bff;
+}
+
+/* POPUP */
+.popup {
+  background: transparent;
+}
+
+.popup-content {
+  background: white;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  border-radius: 15px;
+  padding: 30px;
 }
 </style>
 
 <section class="hero">
-  <h2>Bem-vindo ao Fixly!</h2>
-  
+  <div class="container">
+    <h2>Bem-vindo ao Fixly!</h2>
+  </div>
+
   <p>
-    Explore nossas páginas, acesse <a href="/about">Sobre nós</a> para saber mais sobre nosso site e
+    Nós somos uma plataforma baseada no método de estudo de flashcards,
+    desenvolvido com o intuito de tornar a aprendizagem mais rápida e prática.
+    O site permite que o usuário crie flashcards para revisar conteúdos de forma
+    dinâmica pra facilitar a memorização, podendo também organizar por área,
+    auxiliando na organização. É ideal pra reviews rápidas e estudos mais
+    interativos.
+    Explore nossas páginas, e
     <a href="/signup">Inscreva-se</a> para poder salvar seus Flashcards e compartilhar com amigos!
   </p>
-  
-  <p>Abaixo você terá acesso a uma demonstração de como os flashcards do Fixly funcionam.</p>
+
+  <p>
+    Abaixo você terá acesso a uma demonstração de como os flashcards do Fixly funcionam.
+  </p>
 </section>
 
-<div class="home">
+<div class="pastas-container">
+
   <button id="openFolderPopup">Adicionar pasta</button>
-  
+
   <div id="folderList" class="folder-list"></div>
+
   <section class="materias">
     <div class="buttons">
       <button class="btn-geral" onclick="filterElements('Geral')">Geral</button>
@@ -41,22 +147,22 @@ p {
       <button class="btn-natureza" onclick="filterElements('Ciencias-da-Natureza')">Ciências da Natureza</button>
     </div>
   </section>
+
 </div>
 
-<!--criar pasta-->
 <div id="folderPopup" class="popup hide">
   <div class="popup-content">
     <h2>Nova pasta</h2>
-    
+
     <input type="text" id="folderName" placeholder="Nome da pasta">
-    
+
     <select id="folderCategory">
       <option value="Linguagens">Linguagens</option>
       <option value="Ciencias-Humanas">Ciências Humanas</option>
       <option value="Matematica">Matemática</option>
       <option value="Ciencias-da-Natureza">Ciências da Natureza</option>
     </select>
-    
+
     <div class="buttons">
       <button id="saveFolder">Salvar</button>
       <button id="closeFolder">Fechar</button>
@@ -64,20 +170,19 @@ p {
   </div>
 </div>
 
-<!--popup flashcard-->
 <div id="flashcardPopup" class="popup hide">
   <div class="popup-content large">
-    
+
     <h2 id="folderTitle"></h2>
     <div class="card-list-container"></div>
-    
+
     <button id="addFlashcard">Adicionar Flashcard</button>
-    
+
     <div id="flashcardForm" class="hide">
       <input type="text" id="question" placeholder="Pergunta">
       <input type="text" id="answer" placeholder="Resposta">
     </div>
-    
+
     <div class="buttons">
       <button id="saveCard">Salvar</button>
       <button id="closeFlashcards">Fechar</button>

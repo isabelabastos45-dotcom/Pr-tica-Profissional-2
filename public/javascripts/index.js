@@ -1,3 +1,6 @@
+/* ==========================================================================
+   SELETORES PRINCIPAIS (Elementos do DOM)
+   ========================================================================== */
 const openFolderPopup = document.getElementById("openFolderPopup");
 const folderPopup = document.getElementById("folderPopup");
 const flashcardPopup = document.getElementById("flashcardPopup");
@@ -20,37 +23,57 @@ const closeFlashcards = document.getElementById("closeFlashcards");
 let folders = [];
 let currentFolder = null;
 
-/*popups*/
-openFolderPopup.onclick = () => folderPopup.classList.remove("hide");
-closeFolder.onclick = () => folderPopup.classList.add("hide");
+/* ==========================================================================
+   POPUPS (Abertura e Fechamento)
+   ========================================================================== */
+if (openFolderPopup && folderPopup) {
+    openFolderPopup.onclick = () => {
+        folderPopup.classList.remove("hide");
+    };
+}
 
-/*salvar a pasta*/
-saveFolder.onclick = () => {
-    const name = folderNameInput.value.trim();
-    const category = folderCategory.value;
+if (closeFolder && folderPopup) {
+    closeFolder.onclick = () => {
+        folderPopup.classList.add("hide");
+    };
+}
 
-    if (!name) return alert("Digite um nome!");
+/* ==========================================================================
+   SALVAR PASTA
+   ========================================================================== */
+if (saveFolder && folderNameInput && folderCategory && folderPopup) {
+    saveFolder.onclick = () => {
+        const name = folderNameInput.value.trim();
+        const category = folderCategory.value;
 
-    folders.push({
-        name,
-        category,
-        cards: []
-    });
+        if (!name) {
+            return alert("Digite um nome!");
+        }
 
-    renderFolders();
-    filterElements("Geral");
+        folders.push({
+            name,
+            category,
+            cards: []
+        });
 
-    folderNameInput.value = "";
-    folderPopup.classList.add("hide");
-};
+        renderFolders();
+        filterElements("Geral");
 
-/*render da pasta*/
+        folderNameInput.value = "";
+        folderPopup.classList.add("hide");
+    };
+}
+
+/* ==========================================================================
+   RENDER PASTAS
+   ========================================================================== */
 function renderFolders() {
+    if (!folderList) return;
+
     folderList.innerHTML = "";
 
     folders.forEach((f, i) => {
         const div = document.createElement("div");
-
         div.classList.add("folder-item");
         div.dataset.category = f.category;
 
@@ -59,53 +82,110 @@ function renderFolders() {
         name.classList.add("folder-name");
 
         div.appendChild(name);
-
         div.onclick = () => openFolder(i);
-
         folderList.appendChild(div);
     });
 }
 
-/*abrir pasta*/
+/* ==========================================================================
+   ABRIR PASTA
+   ========================================================================== */
 function openFolder(index) {
+    if (!folders[index]) return;
+    
     currentFolder = folders[index];
-    folderTitle.innerText = currentFolder.name;
+
+    if (folderTitle) {
+        folderTitle.innerText = currentFolder.name;
+    }
 
     renderCards();
-    flashcardPopup.classList.remove("hide");
+
+    if (flashcardPopup) {
+        flashcardPopup.classList.remove("hide");
+    }
 }
 
-/*fechar flashcard*/
-closeFlashcards.onclick = () => {
-    flashcardPopup.classList.add("hide");
-    flashcardForm.classList.add("hide");
-    question.value = "";
-    answer.value = "";
-};
+/* ==========================================================================
+   FECHAR FLASHCARDS
+   ========================================================================== */
+if (closeFlashcards && flashcardPopup && flashcardForm) {
+    closeFlashcards.onclick = () => {
+        flashcardPopup.classList.add("hide");
+        flashcardForm.classList.add("hide");
 
-/*mostrar o form*/
-addFlashcard.onclick = () => {
-    flashcardForm.classList.remove("hide");
-};
+        if (question) question.value = "";
+        if (answer) answer.value = "";
+    };
+}
 
-/*salvar flashcard*/
-saveCard.onclick = () => {
-    const q = question.value.trim();
-    const a = answer.value.trim();
+/* ==========================================================================
+   MOSTRAR FORMULÁRIO DE CARD
+   ========================================================================== */
+if (addFlashcard && flashcardForm) {
+    addFlashcard.onclick = () => {
+        flashcardForm.classList.remove("hide");
+    };
+}
 
-    if (!q || !a) return alert("Preencha tudo!");
+/* ==========================================================================
+   SALVAR FLASHCARD (Integração com o Servidor)
+   ========================================================================== */
+if (saveCard) {
+    saveCard.onclick = async () => {
+        if (!question || !answer || !flashcardForm) return;
 
-    currentFolder.cards.push({ q, a });
+        const q = question.value.trim();
+        const a = answer.value.trim();
 
-    renderCards();
+        if (!q || !a) {
+            return alert("Preencha tudo!");
+        }
 
-    question.value = "";
-    answer.value = "";
-    flashcardForm.classList.add("hide");
-};
+        const usuario = JSON.parse(localStorage.getItem("usuario"));
 
-/*render do card*/
+        if (!usuario) {
+            return alert("Você precisa estar logado!");
+        }
+
+        try {
+            const respostaServidor = await fetch("/flashcards", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    pergunta: q,
+                    resposta: a,
+                    usuarioId: usuario.id
+                })
+            });
+
+            const data = await respostaServidor.json();
+            alert(data.msg);
+
+            if (currentFolder) {
+                currentFolder.cards.push({ q, a });
+                renderCards();
+            }
+
+            question.value = "";
+            answer.value = "";
+            flashcardForm.classList.add("hide");
+
+        } catch (erro) {
+            console.log(erro);
+            alert("Erro ao salvar flashcard");
+        }
+    };
+}
+
+/* ==========================================================================
+   RENDER FLASHCARDS
+   ========================================================================== */
 function renderCards() {
+    if (!cardList || !currentFolder) return;
+
     cardList.innerHTML = "";
 
     currentFolder.cards.forEach(c => {
@@ -125,7 +205,6 @@ function renderCards() {
 
         toggleBtn.onclick = () => {
             answerEl.classList.toggle("hide");
-
             toggleBtn.innerText = answerEl.classList.contains("hide")
                 ? "Mostrar resposta"
                 : "Ocultar resposta";
@@ -134,18 +213,18 @@ function renderCards() {
         div.appendChild(questionEl);
         div.appendChild(toggleBtn);
         div.appendChild(answerEl);
-
         cardList.appendChild(div);
     });
 }
 
-/*filtro*/
+/* ==========================================================================
+   SISTEMA DE FILTROS
+   ========================================================================== */
 function filterElements(category) {
     const elements = document.querySelectorAll(".folder-item");
 
     elements.forEach(el => {
         const elCategory = el.dataset.category;
-
         el.classList.remove("show");
 
         if (category === "Geral" || elCategory === category) {
@@ -154,7 +233,9 @@ function filterElements(category) {
     });
 }
 
-/*iniciar*/
+/* ==========================================================================
+   INICIALIZAÇÃO DA PÁGINA
+   ========================================================================== */
 window.onload = () => {
     filterElements("Geral");
 };

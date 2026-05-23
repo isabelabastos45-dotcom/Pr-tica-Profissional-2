@@ -1,8 +1,9 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
 
-router.get("/", (req, res) => {
-    res.render("profile");
+// Rota para acessar /profile
+router.get('/', (req, res) => {
+    res.render('profile'); 
 });
 
 module.exports = router;

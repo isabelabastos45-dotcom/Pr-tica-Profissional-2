@@ -144,11 +144,12 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
         const data = await resposta.json();
 
         if (resposta.ok) {
-            localStorage.setItem("token", data.token);
+            // ✔ só salva usuário
             localStorage.setItem("usuario", JSON.stringify(data.usuario));
 
             alert("Login realizado!");
-            window.location.href = "/profile";
+
+            window.location.replace("/profile");
         } else {
             alert(data.msg || "Erro ao fazer login");
         }
@@ -160,4 +161,4 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
 });
 </script>
 
-<%- include('partials/footer') %
+<%- include('partials/footer') -%>

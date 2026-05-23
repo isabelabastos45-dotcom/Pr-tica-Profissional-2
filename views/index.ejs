@@ -1,44 +1,233 @@
-// --- Proteção para o Popup de Pastas ---
-const openFolderPopupBtn = document.getElementById("openFolderPopup");
-const closeFolderBtn = document.getElementById("closeFolder");
-const folderPopup = document.getElementById("folderPopup");
+<%- include('partials/header', { title: 'Home' }) %>
 
-if (openFolderPopupBtn && folderPopup) {
-    openFolderPopupBtn.addEventListener("click", () => {
-        folderPopup.classList.remove("hide");
-    });
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@900&display=swap" rel="stylesheet">
+
+<style>
+body {
+  background: linear-gradient(180deg, #74b9ff 0%, #dfefff 60%, #ffffff 100%);
+  background-attachment: fixed;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
 }
 
-if (closeFolderBtn && folderPopup) {
-    closeFolderBtn.addEventListener("click", () => {
-        folderPopup.classList.add("hide");
-    });
+h2, p {
+  text-align: center;
 }
 
-// --- Proteção para o Popup de Flashcards ---
-const closeFlashcardsBtn = document.getElementById("closeFlashcards");
-const flashcardPopup = document.getElementById("flashcardPopup");
-
-if (closeFlashcardsBtn && flashcardPopup) {
-    closeFlashcardsBtn.addEventListener("click", () => {
-        flashcardPopup.classList.add("hide");
-    });
+/* Títulos padrões (Como os de dentro dos Popups) */
+h2 {
+  font-family: 'Merriweather', serif;
+  color: #104488;
+  font-size: 28px;
+  margin-top: 0;
+  margin-bottom: 20px;
 }
 
-// --- Função para Salvar Flashcard (Verificando se os inputs existem) ---
-async function salvarFlashcard() {
+/* CLASSE NOVA: Criada especificamente para o título gigante de boas-vindas */
+.titulo-principal {
+  font-size: 80px;
+  color: #6dbdff;
+  font-family: 'Merriweather', serif;
+  font-weight: 1000;
+  letter-spacing: 1px;
+  padding: 20px;
+  background-color: #104488;
+  width: 100%;
+  max-width: 100vw;
+  border-radius: 20px;
+  display: inline-block;
+  box-sizing: border-box;
+}
+
+p {
+  max-width: 700px;
+  margin: 10px auto;
+  line-height: 1.5;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.hero {
+  padding-top: 40px;
+}
+
+.home {
+  min-height: auto;
+}
+
+.pastas-container {
+  background: rgba(255, 255, 255, 0.85);
+  padding: 40px;
+  border-radius: 25px;
+  width: fit-content;
+  margin: 50px auto 100px auto;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+button {
+  padding: 15px 25px;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.btn-geral { background-color: #ff7043; color: #832e15; }
+.btn-linguagens { background-color: #ec5f91; color: #940b3b; }
+.btn-humanas { background-color: #f4c542; color: #7c5f07; }
+.btn-matematica { background-color: #9b59b6; color: #590c77; }
+.btn-natureza { background-color: #48c78e; color: #065a34; }
+
+#openFolderPopup {
+  display: block;
+  margin: 0 auto 30px auto;
+  background-color: #007bff;
+}
+
+/* POPUP (Corrigido para cobrir a tela inteira com fundo escuro) */
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* Esconder o popup quando tiver a classe 'hide' */
+.popup.hide {
+  display: none;
+}
+
+.popup-content {
+  background: white;
+  box-shadow: 0 4px 25px rgba(0,0,0,0.3);
+  border-radius: 20px;
+  padding: 40px;
+  width: 100%;
+  max-width: 450px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  box-sizing: border-box;
+}
+
+.popup-content.large {
+  max-width: 700px;
+}
+
+/* Estilização básica dos inputs dos popups */
+.popup-content input, .popup-content select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+#saveFolder { background-color: #48c78e; }
+#closeFolder, #closeFlashcards { background-color: #74b9ff; }
+#saveCard { background-color: #007bff; }
+#addFlashcard { background-color: #5093d7; margin-bottom: 15px; }
+</style>
+
+<section class="hero">
+  <div class="container">
+    <h2 class="titulo-principal">Bem-vindo ao Fixly!</h2>
+  </div>
+
+  <p>
+    Nós somos uma plataforma baseada no método de estudo de flashcards,
+    desenvolvido com o intuito de tornar a aprendizagem mais rápida e prática.
+    O site permite que o usuário crie flashcards para revisar conteúdos de forma
+    dinâmica pra facilitar a memorização, podendo também organizar por área,
+    auxiliando na organização. É ideal pra reviews rápidas e estudos mais
+    interativos.
+    Explore nossas páginas, e
+    <a href="/signup">Inscreva-se</a> para poder salvar seus Flashcards e compartilhar com amigos!
+  </p>
+
+  <p>
+    Abaixo você terá acesso a uma demonstração de como os flashcards do Fixly funcionam.
+  </p>
+</section>
+
+<div class="pastas-container">
+  <button id="openFolderPopup">Adicionar pasta</button>
+  <div id="folderList" class="folder-list"></div>
+
+  <section class="materias">
+    <div class="buttons">
+      <button class="btn-geral" onclick="filterElements('Geral')">Geral</button>
+      <button class="btn-linguagens" onclick="filterElements('Linguagens')">Linguagens</button>
+      <button class="btn-humanas" onclick="filterElements('Ciencias-Humanas')">Ciências Humanas</button>
+      <button class="btn-matematica" onclick="filterElements('Matematica')">Matemática</button>
+      <button class="btn-natureza" onclick="filterElements('Ciencias-da-Natureza')">Ciências da Natureza</button>
+    </div>
+  </section>
+</div>
+
+<div id="folderPopup" class="popup hide">
+  <div class="popup-content">
+    <h2>Nova pasta</h2>
+    <input type="text" id="folderName" placeholder="Nome da pasta">
+    <select id="folderCategory">
+      <option value="Linguagens">Linguagens</option>
+      <option value="Ciencias-Humanas">Ciências Humanas</option>
+      <option value="Matematica">Matemática</option>
+      <option value="Ciencias-da-Natureza">Ciências da Natureza</option>
+    </select>
+    <div class="buttons">
+      <button id="saveFolder">Salvar</button>
+      <button id="closeFolder">Fechar</button>
+    </div>
+  </div>
+</div>
+
+<div id="flashcardPopup" class="popup hide">
+  <div class="popup-content large">
+    <h2 id="folderTitle"></h2>
+    <div class="card-list-container"></div>
+    <button id="addFlashcard">Adicionar Flashcard</button>
+    <div id="flashcardForm" class="hide">
+      <input type="text" id="question" placeholder="Pergunta">
+      <input type="text" id="answer" placeholder="Resposta">
+    </div>
+    <div class="buttons">
+      <button id="saveCard">Salvar</button>
+      <button id="closeFlashcards">Fechar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+async function salvarFlashcard(){
     const questionInput = document.getElementById("question");
     const answerInput = document.getElementById("answer");
 
-    // Só avança se os inputs existirem na tela atual
-    if (!questionInput || !answerInput) return;
+    if(!questionInput || !answerInput) return;
 
     const pergunta = questionInput.value;
     const resposta = answerInput.value;
 
     const usuario = JSON.parse(localStorage.getItem("usuario"));
 
-    if (!usuario) {
+    if(!usuario){
         alert("Você precisa estar logado!");
         return;
     }
@@ -59,14 +248,16 @@ async function salvarFlashcard() {
         const data = await respostaServidor.json();
         alert(data.msg);
 
-    } catch (erro) {
+    } catch(erro) {
         console.log(erro);
         alert("Erro ao salvar flashcard");
     }
 }
 
-// --- Evento do Botão Salvar Flashcard (Protegido) ---
 const saveCardBtn = document.getElementById("saveCard");
 if (saveCardBtn) {
     saveCardBtn.addEventListener("click", salvarFlashcard);
 }
+</script>
+
+<%- include('partials/footer') %>

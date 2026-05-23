@@ -1,150 +1,206 @@
-<%- include('partials/header', { title: 'Página de usuário' }) %>
-
-<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@900&display=swap" rel="stylesheet">
+<%- include('partials/header', { title: 'Meu Perfil' }) %>
 
 <style>
-body {
-  background: linear-gradient(180deg, #74b9ff 0%, #dfefff 60%, #ffffff 100%);
-  background-attachment: fixed; 
-  min-height: 100vh;
-  margin: 0;
-  padding: 0;
-  font-family: sans-serif;
-}
+  body {
+    background: linear-gradient(180deg, #74b9ff 0%, #dfefff 60%, #ffffff 100%);
+    background-attachment: fixed;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+  }
 
-h2 {
-  font-size: 42px;
-  color: #104488;
-  text-align: center;
-  font-family: 'Merriweather', serif;
-  font-weight: 1000;
-  letter-spacing: 1px;
-  margin-bottom: 20px;
-}
+  .perfil-container {
+    background: rgba(255, 255, 255, 0.9);
+    max-width: 550px;
+    margin: 60px auto 100px auto;
+    padding: 40px;
+    border-radius: 25px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    text-align: center;
+    box-sizing: border-box;
+  }
 
-.hero {
-  padding-top: 60px;
-  text-align: center;
-}
+  .perfil-container h1 {
+    font-family: 'Merriweather', serif;
+    color: #104488;
+    font-size: 32px;
+    margin-top: 0;
+    margin-bottom: 20px;
+  }
 
-/* Container do Perfil (Seguindo o padrão do Fixly) */
-.profile-container {
-  max-width: 500px;
-  margin: 30px auto 100px auto; 
-  padding: 40px;
-  border-radius: 25px;
-  background: rgba(255, 255, 255, 0.85); 
-  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-  text-align: center;
-  box-sizing: border-box;
-}
+  /* --- Círculo da Foto de Perfil --- */
+  .avatar-container {
+    margin-bottom: 15px;
+    position: relative;
+    display: inline-block;
+  }
 
-/* Avatar circular do usuário */
-.profile-avatar {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  background: #104488; /* Azul escuro do tema para dar contraste */
-  margin: 0 auto 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-}
+  .avatar-preview {
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #74b9ff;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    background-color: #e3f2fd;
+  }
 
-/* Nome principal do usuário dentro do card */
-#nome {
-  font-family: 'Merriweather', serif;
-  color: #104488;
-  margin-bottom: 25px;
-  font-size: 28px;
-}
+  /* --- Estilização do Botão de Escolher Arquivo --- */
+  .foto-form {
+    margin-bottom: 30px;
+  }
 
-/* Informações de texto */
-.profile-info {
-  margin: 15px 0;
-  font-size: 18px;
-  color: #333;
-  text-align: left; /* Alinhado à esquerda para melhor leitura de dados */
-  padding: 10px 15px;
-  background: rgba(255, 255, 255, 0.5);
-  border-radius: 8px;
-  border-left: 5px solid #74b9ff; /* Detalhe em azul na borda */
-}
+  /* Esconde o input feio padrão do sistema */
+  #input-file-foto {
+    display: none;
+  }
 
-.profile-info strong {
-  color: #104488;
-}
+  /* Cria um botão bonito combinando com o Fixly */
+  .label-upload {
+    display: inline-block;
+    background: #104488;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 14px;
+    transition: background 0.2s, transform 0.1s;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
 
-/* Botão de Logout (Estilo Alerta/Sair baseado no btn-geral da Home) */
-.profile-container button {
-  width: 100%;
-  margin-top: 25px;
-  padding: 15px 25px;
-  border: none;
-  border-radius: 8px;
-  color: #ffffff; 
-  font-size: 18px;
-  font-weight: bold;
-  cursor: pointer;
-  background-color: #007bff; 
-  transition: background 0.2s ease, transform 0.1s ease;
-}
+  .label-upload:hover {
+    background: #002d66;
+  }
 
-.profile-container button:hover {
-  background-color: #0056b3;
-  color: #ffffff;
-}
+  .label-upload:active {
+    transform: scale(0.98);
+  }
+
+  /* --- Caixas de Informação --- */
+  .info-box {
+    background: #ffffff;
+    padding: 15px 20px;
+    border: 1px solid #dfefff;
+    border-radius: 12px;
+    margin-bottom: 15px;
+    text-align: left;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  }
+
+  .info-box p {
+    margin: 0;
+    font-size: 16px;
+    color: #333;
+  }
+
+  .info-box strong {
+    color: #104488;
+  }
+
+  .btn-voltar {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 8px;
+    background-color: #007bff;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .btn-voltar:hover {
+    background-color: #0056b3;
+  }
 </style>
 
-<section class="hero">
-  <h2>Página de usuário</h2>
-</section>
-
-<div class="profile-container">
-
-  <div class="profile-avatar">
-    <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-      <circle cx="12" cy="7" r="4"></circle>
-    </svg>
+<div class="perfil-container">
+  <h1>Meu Perfil</h1>
+  
+  <div class="avatar-container">
+    <img id="perfil-foto-img" class="avatar-preview" src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="Foto de Perfil">
   </div>
 
-  <h1 id="nome">Carregando...</h1>
-
-  <div class="profile-info">
-    <strong>Username:</strong>
-    <span id="username"></span>
+  <div class="foto-form">
+    <input type="file" id="input-file-foto" accept="image/*" onchange="atualizarFotoLocal(this)">
+    <label for="input-file-foto" class="label-upload">Escolher Foto</label>
+  </div>
+  
+  <div class="info-box">
+    <p><strong>Nome:</strong> <span id="perfil-nome">Carregando...</span></p>
+  </div>
+  
+  <div class="info-box">
+    <p><strong>Usuário:</strong> <span id="perfil-username">Carregando...</span></p>
+  </div>
+  
+  <div class="info-box">
+    <p><strong>E-mail:</strong> <span id="perfil-email">Carregando...</span></p>
   </div>
 
-  <div class="profile-info">
-    <strong>Email:</strong>
-    <span id="email"></span>
-  </div>
-
-  <button onclick="logout()">
-    Sair da conta
-  </button>
-
+  <a href="/" class="btn-voltar">Voltar ao Início</a>
 </div>
 
 <script>
-const usuario = JSON.parse(
-    localStorage.getItem("usuario")
-);
+  // Função que carrega o perfil ao abrir a tela
+  function carregarPerfil() {
+      const usuario = JSON.parse(localStorage.getItem("usuario"));
+      
+      if (!usuario) {
+          alert("Você precisa estar logado para ver seu perfil!");
+          window.location.href = "/login";
+          return;
+      }
+      
+      document.getElementById('perfil-nome').innerText = usuario.nome || "Não informado";
+      document.getElementById('perfil-username').innerText = usuario.username ? `@${usuario.username}` : "Não informado";
+      document.getElementById('perfil-email').innerText = usuario.email || "Não informado";
+      
+      // Se já tiver uma imagem em Base64 salva no localStorage, exibe ela
+      if (usuario.fotoUrl) {
+          document.getElementById('perfil-foto-img').src = usuario.fotoUrl;
+      }
+  }
 
-if (!usuario) {
-    window.location.href = "/login";
-} else {
-    document.getElementById("nome").innerText = usuario.nome;
-    document.getElementById("email").innerText = usuario.email;
-    document.getElementById("username").innerText = usuario.username || "Sem username";
-}
+  // Função mágica que pega o arquivo do PC/Celular e transforma em texto para salvar
+  function atualizarFotoLocal(input) {
+      if (input.files && input.files[0]) {
+          const arquivo = input.files[0];
 
-function logout() {
-    localStorage.clear();
-    window.location.href = "/login";
-}
+          // Validação simples de tamanho (evita travar o localStorage com imagens gigantes)
+          if (arquivo.size > 2 * 1024 * 1024) { 
+              alert("Escolha uma imagem de até 2MB para não sobrecarregar o sistema!");
+              return;
+          }
+
+          const leitor = new FileReader();
+          
+          // Quando terminar de ler o arquivo...
+          leitor.onload = function(e) {
+              const base64String = e.target.result; // Imagem convertida em texto seguro
+              
+              const usuario = JSON.parse(localStorage.getItem("usuario"));
+              if (usuario) {
+                  // Grava a string da imagem no objeto do usuário
+                  usuario.fotoUrl = base64String;
+                  localStorage.setItem("usuario", JSON.stringify(usuario));
+                  
+                  // Atualiza a pré-visualização na hora
+                  document.getElementById('perfil-foto-img').src = base64String;
+                  alert("Foto de perfil atualizada!");
+              }
+          }
+          
+          leitor.readAsDataURL(arquivo); // Dispara a conversão da imagem
+      }
+  }
+
+  window.addEventListener('DOMContentLoaded', carregarPerfil);
 </script>
 
 <%- include('partials/footer') %>

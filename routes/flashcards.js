@@ -3,9 +3,9 @@ const router = express.Router();
 
 const Flashcard = require("../models/Flashcard");
 
-
-// SALVAR FLASHCARD
 router.post("/", async (req, res) => {
+
+    console.log(req.body);
 
     try {
 
@@ -29,6 +29,8 @@ router.post("/", async (req, res) => {
 
     } catch (erro) {
 
+        console.log(erro);
+
         res.status(500).json({
             erro: erro.message
         });
@@ -37,8 +39,6 @@ router.post("/", async (req, res) => {
 
 });
 
-
-// LISTAR FLASHCARDS DO USUÁRIO
 router.get("/:usuarioId", async (req, res) => {
 
     try {

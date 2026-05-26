@@ -4,7 +4,6 @@ const router = express.Router();
 const User = require("../models/User");
 
 const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
 
 // =========================
 // REGISTER
@@ -96,19 +95,7 @@ router.post("/login", async (req, res) => {
             });
         }
 
-        // =========================
-        // GERAR TOKEN JWT
-        // =========================
-        const token = jwt.sign(
-            {
-                id: usuario._id,
-                email: usuario.email
-            },
-            process.env.JWT_SECRET,
-            {
-                expiresIn: "1d"
-            }
-        );
+    
 
         // =========================
         // SALVAR SESSÃO
@@ -134,7 +121,6 @@ router.post("/login", async (req, res) => {
 
             return res.json({
                 msg: "Logado com sucesso!",
-                token,
                 usuario: req.session.usuario
             });
 

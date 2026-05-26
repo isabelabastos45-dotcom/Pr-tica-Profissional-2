@@ -1,8 +1,6 @@
 const express = require("express");
 const router = express.Router();
 
-const jwt = require("jsonwebtoken");
-
 const Flashcard = require("../models/Flashcard");
 
 const { auth } = require("../middlewares/middleware");
@@ -19,40 +17,7 @@ router.get("/", (req, res) => {
 // sessão OU JWT
 // =========================
 function obterUsuarioId(req) {
-
-    // sessão
-    if (req.session && req.session.usuario) {
-        return req.session.usuario.id;
-    }
-
-    // token JWT
-    const authHeader = req.headers.authorization;
-
-    if (authHeader && authHeader.startsWith("Bearer ")) {
-
-        try {
-
-            const token = authHeader.split(" ")[1];
-
-            const decodificado = jwt.verify(
-                token,
-                process.env.JWT_SECRET
-            );
-
-            return decodificado.id;
-
-        } catch (erro) {
-
-            console.log(
-                "Erro ao decodificar token:",
-                erro.message
-            );
-
-            return null;
-        }
-    }
-
-    return null;
+    return req.session.usuario.id;
 }
 
 // =========================
